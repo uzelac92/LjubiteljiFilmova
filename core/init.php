@@ -8,7 +8,7 @@
     
     if(logged_in()===true){
         $session_user_id = $_SESSION['IDKORISNIKA'];
-        $user_data = user_data($session_user_id,'IDKORISNIKA','KORISNICKOIME','SIFRA','IME','PREZIME','MEJL','BRFILMOVA');
+        $user_data = user_data($session_user_id,'IDKORISNIKA','KORISNICKOIME','SIFRA','IME','PREZIME','MEJL','BRFILMOVA','TIP');
     }
     
     $errors = array();

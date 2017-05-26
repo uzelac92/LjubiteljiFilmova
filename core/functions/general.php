@@ -14,6 +14,14 @@
         }
     }
     
+    function admin_protect() {
+        global $user_data;
+        if(is_admin($user_data['IDKORISNIKA']) == 0) {
+            header('Location: index.php');
+            exit();
+        }
+    }
+    
     function array_sanitize($item) {
         $connect = @mysqli_connect('localhost','root','','ljubiteljifilmovadb') OR die("Can't connect"); 
         $item = mysqli_real_escape_string($connect, $item);

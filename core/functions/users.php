@@ -1,5 +1,12 @@
-<?php
+<?php    
     
+    function is_admin($user_id){
+        $user_id = (int)$user_id;
+        $connect = @mysqli_connect('localhost','root','','ljubiteljifilmovadb') OR die("Can't connect");
+        $query = mysqli_query($connect,"SELECT TIP FROM nalog WHERE IDKORISNIKA = $user_id");
+        return mysqli_result($query,0,'TIP');
+    }
+
     function register_user($register_data){
         array_walk($register_data,'array_sanitize');
         $fields = '`' . implode('`, `',array_keys($register_data)) . '`';
@@ -48,20 +55,14 @@
         $query = mysqli_query($connect,"SELECT IDKORISNIKA FROM `nalog` WHERE MEJL = '$email'"); 
         return(mysqli_num_rows($query) == 1) ? true : false; 
     }
-
-    /*function user_id_from_username($username) { 
-        $con = mysqli_connect('localhost','root','','ljubiteljifilmovadb'); 
-        $username = sanitize($username); 
-        return mysqli_result(mysqli_query( $connect ,"SELECT 'IDKORISNIKA' FROM `nalog` WHERE `KORISNICKOIME` = '$username'"), 0, 'IDKORISNIKA');
-    }*/
     
     function mysqli_result($res, $row, $field=0) { 
         $res->data_seek($row); 
         $datarow = $res->fetch_array(); 
         return $datarow[$field]; 
-    } 
-    
-    function user_id_from_username($username){
+    }
+        
+    function user_id_from_username($username){ 
         $username = sanitize($username);
         $link = mysqli_connect('localhost', 'root', '', 'ljubiteljifilmovadb');
         $query = mysqli_query($link,"SELECT IDKORISNIKA FROM nalog WHERE KORISNICKOIME = '$username'");
@@ -69,6 +70,7 @@
         return mysqli_result($query,0,'IDKORISNIKA');
 
     }
+    
 
     function login($username, $password) { 
         $user_id = user_id_from_username($username); 
